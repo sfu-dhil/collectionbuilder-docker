@@ -1,4 +1,10 @@
 ##########
+# collectionbuilder-csv
+# Jekyll Digital Collection Generator
+# https://github.com/CollectionBuilder/collectionbuilder-csv
+##########
+
+##########
 # URL VARIABLES
 #
 # site domain, full URL to the production location of your collection
@@ -12,14 +18,14 @@ source-code: https://github.com/sfu-dhil/collectionbuilder-docker
 # SITE SETTINGS
 #
 # title of site appears in banner
-title: CollectionBuilder Docker
+title: CollectionBuilder CSV
 # tagline, a short phrase that will appear throughout the site in the top banner
 tagline: Digital Collection Magic with Static Web Technologies
 # description appears in meta tags and other locations
 # this description might appear in search result lists, keep around 160 characters max
-description: "CollectionBuilder-Docker is a tool for creating digital collection exhibits using static web technology."
+description: "CollectionBuilder-CSV is a template for creating digital collection exhibits using static web technology."
 # keywords, a short list of subjects describing the collection, separated by semicolon, to appear in rich markup
-keywords:
+keywords: idaho; history; inland northwest
 # creator of the digital collection, to appear in meta tags; we typically use our GitHub usernames but feel free to just use your name
 author: CollectionBuilder
 
@@ -28,7 +34,7 @@ author: CollectionBuilder
 #
 # Set the metadata for your collection (the name of the CSV file in your _data directory that describes the objects in your collection)
 # Use the filename of your CSV **without** the ".csv" extension! E.g. _data/demo-metadata.csv --> "demo-metadata"
-metadata: metadata
+metadata: demo-compoundobjects-metadata
 # page generation settings [optional!]
 # [optional: only used if you need to tweak CB defaults or generate from more than one data file]
 # page_gen:
@@ -44,10 +50,10 @@ metadata: metadata
 #   Enter information for your organization (replacing the CDIL links and name below) if you'd like to brand your site with a logo
 #   To remove the branding, comment out these values, or delete them.
 #
-organization-name: "Digital Humanities Innovation Lab (DHIL)"
-organization-link: https://www.lib.sfu.ca/help/publish/dh/dhil/about
-organization-logo-banner:
-organization-logo-nav:
+organization-name: "Center for Digital Inquiry and Learning (CDIL)"
+organization-link: https://cdil.lib.uidaho.edu/
+organization-logo-banner: https://cdil.lib.uidaho.edu/storying-extinction/assets/img/cdil.png
+organization-logo-nav: https://cdil.lib.uidaho.edu/assets/img/logo.png
 
 ##########
 # ROBOTS EXCLUDE
@@ -63,7 +69,7 @@ organization-logo-nav:
 # (this is done automatically by gh-pages build)
 #
 # ignore stuff
-exclude: [demo/, Rakefile, rakelib/, .github/, README.md, LICENSE]
+exclude: [demo/, Rakefile, rakelib/, .github/, README.md, LICENSE, CITATION.cff, CODE_OF_CONDUCT.md, CONTRIBUTING.md, SECURITY.md]
 # compress CSS output
 sass:
   style: compressed

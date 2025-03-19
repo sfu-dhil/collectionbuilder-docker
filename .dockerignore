@@ -10,3 +10,10 @@ vendor/
 
 # Ignore mac files
 .DS_Store
+
+# github action
+.github/
+# any existing output
+_site
+# ignore demo
+demo/

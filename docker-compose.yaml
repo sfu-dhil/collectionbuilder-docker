@@ -1,0 +1,29 @@
+services:
+  collectionbuilder:
+    container_name: collectionbuilder_serve
+    # image: dhilsfu/collectionbuilder-docker
+    build:
+      context: .
+    ports:
+      - 4000:4000
+    volumes:
+      # code for development
+      - .:/app
+
+      # override specific content folders with demo content
+      - ./demo/objects:/app/objects
+      - ./demo/pages:/app/pages
+      - ./demo/_config.yml:/app/_config.yml
+
+      # load just the demo metadata and theme in
+      - ./demo/_data/demo-compoundobjects-metadata.csv:/app/_data/demo-compoundobjects-metadata.csv
+      - ./demo/_data/theme.yml:/app/_data/theme.yml
+      # or override the entire _data folder
+      # - ./demo/_data:/app/_data
+
+      # don't touch the _site folder
+      - /app/_site
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:4000/ || exit 1"]
+      interval: 2s
+      retries: 120
