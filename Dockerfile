@@ -10,11 +10,11 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # install ruby deps
-COPY Gemfile Gemfile.lock ./
+COPY /app/Gemfile /app/Gemfile.lock /app/
 RUN bundle install
 
 # add project files
-COPY . /app
+COPY /app /app
 
 # start jekyll serve
 CMD ["jekyll", "serve", "--host=0.0.0.0"]

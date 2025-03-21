@@ -63,7 +63,7 @@ organization-logo-nav:
 # (this is done automatically by gh-pages build)
 #
 # ignore stuff
-exclude: [demo/, Rakefile, rakelib/, .github/, README.md, LICENSE]
+exclude: [Rakefile, rakelib/]
 # compress CSS output
 sass:
   style: compressed
