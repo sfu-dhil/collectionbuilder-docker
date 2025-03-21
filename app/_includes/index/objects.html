@@ -9,7 +9,7 @@
 
     Options:
 
-    - "btn-color" - a bootstrap color class to theme the buttons. Can be any bootstrap template color (e.g. info, success) or outline (e.g. outline-info, outline-success), including colors created in config-theme-colors. (optional, default "outline-secondary")
+    - "btn-color" - a bootstrap color class to theme the buttons. Can be any bootstrap template color (e.g. info, success) or outline (e.g. outline-info, outline-success). (optional, default "outline-secondary")
     - "heading_level" = customize the level of the heading if necessary for accessibility, choose "h1", "h2", "h3", etc (optional, default "h2")
     - "object_field" = optionally change the field used to count items. Typically this is either "display_template" (default) or "format". The field should be available on the Browse page to filter! The icons assume you use something like "display_template" or "format" to select the correct icon.
     - "child-objects" = include child items in count or only parents, true or false (optional, default false)
@@ -33,7 +33,7 @@
         {%- assign count = templates | where_exp: 'item', 'item contains t' | size -%}
         {% if count > 0 %}
         {{ count }}
-        <a class="text-dark" href="{{ t | prepend: '/browse.html#' | relative_url }}">{{ t | upcase | replace: "_", " " }} 
+        <a class="text-body" href="{{ t | prepend: '/browse.html#' | relative_url }}">{{ t | upcase | replace: "_", " " }}
         {% include helpers/get-icon-svg.html type="hidden" template=t %}</a><br>
         {%- endif -%}
         {%- endfor -%}

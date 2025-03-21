@@ -1,4 +1,4 @@
-{% comment %} 
+{% comment %}
 
     Image item carousel.
     This include adds a Bootstrap Carousel component populated with randomly selected image items, designed with index page in mind.
@@ -15,10 +15,10 @@
     - "header" = card header text in bar above card content (optional)
     - "heading_level" = customize the level of the heading if necessary for accessibility, choose "h1", "h2", "h3", etc (optional, default "h2")
     - "max" = maximum images selected for slide show (optional, default 9. Do not make too big!)
-    - "btn-color" = a bootstrap color class to theme the buttons. Can be any bootstrap template color (e.g. info, success) or outline (e.g. outline-info, outline-success), including colors created in config-theme-colors. (optional, default "primary")
+    - "btn-color" = a bootstrap color class to theme the buttons. Can be any bootstrap template color (e.g. info, success) or outline (e.g. outline-info, outline-success). (optional, default "primary")
     - "btn-text" = the label used in the link btn to view the carousel item (optional, default "View Item")
     - "filter-field" and "filter-value" = use these options together to filter which set of items will appear in the carousel based on a particular metadata field and value in that field. filter-field must match a column in your metadata. any item with a value in the filter-field that "contains" the filter-value will be included, it does not need to be an exact match. (optional)
-    
+
 {%- endcomment -%}
 
 {%- assign carousel-max = include.max | default: 9 -%}
@@ -43,13 +43,13 @@
     {% if include.header %}<{{ include.heading_level | default: 'h2' | strip }} class="card-header h5">{{ include.header }}</{{ include.heading_level | default: 'h2' | strip }}>{% endif %}
     <div class="card-body">
         {% if include.title %}<{{ include.heading_level | default: 'h2' | strip }} class="card-title h5">{{ include.title }}</{{ include.heading_level | default: 'h2' | strip }}>{% endif %}
-        
-        <div id="imageCarousel" class="carousel slide bg-dark rounded mb-3" data-bs-ride="carousel">
+
+        <div id="imageCarousel" class="carousel slide rounded mb-3 bg-secondary" data-bs-ride="carousel">
             <div id="carouselIndicators" class="carousel-indicators">
-                
+
             </div>
             <div id="carouselInner" class="carousel-inner">
-                
+
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -60,7 +60,7 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-            
+
     </div>
 </div>
 {%- comment -%}
@@ -87,8 +87,8 @@
             itemLink = '{{ '/items/' | relative_url }}' + carouselItems[i][3] + '.html#' + carouselItems[i][1];}
         else {
             itemLink = '{{ '/items/' | relative_url }}' + carouselItems[i][1] + '.html';
-        }   
-        // create indicator 
+        }
+        // create indicator
         indicator = `<button type="button" data-bs-target="#imageCarousel" data-bs-slide-to="${i.toString()}" ${ i == 0 ? 'class="active" aria-current="true" ' : '' }aria-label="Slide ${i.toString()}"></button>`;
         // create slide
         slide = `<div class="carousel-item py-2${ i == 0 ? ' active' : '' }">
@@ -100,7 +100,7 @@
         slides += slide;
         indicators += indicator;
     }
-    // add indicators to page 
+    // add indicators to page
     carouselIndicators.innerHTML = indicators;
     // add slides to the page
     carousel.innerHTML = slides;

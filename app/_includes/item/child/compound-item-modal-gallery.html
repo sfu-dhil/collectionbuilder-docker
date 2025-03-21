@@ -1,7 +1,7 @@
 {% comment %}
 
     Creates a gallery of thumbnails images or icons for each child item in a compound object. The thumb defaults to image_thumb or image_small, otherwise an icon is added based on the display_template or format of the child item.
-    
+
     Each child item is given a popup modal with full display and metadata information. The display is chosen based on the display_template of the child item.
 
     This include requires the Liquid object "child" to be present! The item display requires the compound object item includes in "item/child/".
@@ -13,9 +13,9 @@
         <div class="card h-100">
             <div class="my-auto">
                 <div class="card-body text-center" id="{{ child.objectid }}Card">
-                
-                    {% if child.title %}<div class="small text-dark mb-2">{{ child.title | truncatewords: 4 }}</div>{% endif %}
-                    
+
+                    {% if child.title %}<div class="small mb-2">{{ child.title | truncatewords: 4 }}</div>{% endif %}
+
                     <div class="mb-2">
                         {% if child.image_thumb or child.image_small %}
                         <img class="img-thumbnail compound-thumb" src="{{ child.image_thumb | default: child.image_small | relative_url }}" alt="{{ child.image_alt_text | default: child.description | default: child.title | escape }}">
@@ -36,7 +36,7 @@
                         onclick="window.location.hash='{{ child.objectid }}'"
                         class="btn btn-sm btn-outline-secondary small stretched-link">
                         {{ child.display_template | upcase | default: "Item" }} <svg class="bi icon-sprite" fill="currentColor" aria-hidden="true"><use xlink:href="{{ '/assets/lib/cb-icons.svg' | relative_url }}#icon-{{ child.display_template | default: 'file'}}"/></svg>
-                    </a> 
+                    </a>
 
                     <!-- child object modal -->
                     <div class="modal fade" id="{{ child.objectid }}" tabindex="-1" role="dialog" aria-labelledby="{{ child.objectid }}ModalLabel" aria-hidden="true">
@@ -58,7 +58,7 @@
                                             {% capture next_item_id %}{{ children[next_index].objectid }}{% endcapture %}
                                             {% capture prev_item_id %}{{ children[prev_index].objectid }}{% endcapture %}
                                             <div class="col-1 col-md-2">
-                                                <button data-bs-target="#{{ prev_item_id }}" data-bs-toggle="modal" onclick="{% if stopMedia != '' %}stopMedia('{{ child.objectid }}','{{ stopMedia }}');{% endif %}window.location.hash='{{ prev_item_id }}'" class="btn btn-outline-dark btn-sm prev-child-button" >
+                                                <button data-bs-target="#{{ prev_item_id }}" data-bs-toggle="modal" onclick="{% if stopMedia != '' %}stopMedia('{{ child.objectid }}','{{ stopMedia }}');{% endif %}window.location.hash='{{ prev_item_id }}'" class="btn btn-outline-primary btn-sm prev-child-button" >
                                                     <svg class="bi icon-sprite" role="img" aria-label="Previous Item">
                                                         <use xlink:href="{{ '/assets/lib/cb-icons.svg' | relative_url }}#arrow-left"/>
                                                     </svg>
@@ -66,13 +66,13 @@
                                                 </button>
                                             </div>
                                             <div class="col-9 col-md-8 text-center">
-                                                <h3 class="h5">{{ page.title }} 
+                                                <h3 class="h5">{{ page.title }}
                                                     <span class="d-none d-md-inline">-</span><span class="d-md-none"><br></span>
                                                     Item {{ forloop.index }} of {{ children | size }}
                                                 </h3>
                                             </div>
                                             <div class="col-1 col-md-2 text-end">
-                                                <button  data-bs-target="#{{ next_item_id }}" data-bs-toggle="modal" onclick="{% if stopMedia != '' %}stopMedia('{{ child.objectid }}','{{ stopMedia }}');{% endif %}window.location.hash='{{ next_item_id }}'" class="ms-md-5 btn btn-outline-dark btn-sm next-child-button">
+                                                <button  data-bs-target="#{{ next_item_id }}" data-bs-toggle="modal" onclick="{% if stopMedia != '' %}stopMedia('{{ child.objectid }}','{{ stopMedia }}');{% endif %}window.location.hash='{{ next_item_id }}'" class="ms-md-5 btn btn-outline-primary btn-sm next-child-button">
                                                     <span class="d-none d-md-inline">Next Item</span>
                                                     <svg class="bi icon-sprite" role="img" aria-label="Next Item">
                                                         <use xlink:href="{{ '/assets/lib/cb-icons.svg' | relative_url }}#arrow-right"/>
@@ -150,7 +150,7 @@ function stopMedia(objectid, type) {
     if (type == "video") {
         const mediaElement = document.querySelector(`#${ objectid } video`);
         mediaElement.pause();
-        //mediaElement.currentTime = 0;   
+        //mediaElement.currentTime = 0;
     }
     if (type == "youtube") {
         const mediaElement = document.querySelector(`#${ objectid } iframe`);
@@ -161,5 +161,5 @@ function stopMedia(objectid, type) {
         const mediaElement = document.querySelector(`#${ objectid } iframe`);
         mediaElement.contentWindow.postMessage('{"method":"pause"}', '*');
     }
-} 
+}
 </script>

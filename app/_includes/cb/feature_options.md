@@ -1,6 +1,6 @@
 ## Feature *Includes* Bonanza page
 
-Check all the includes. Steal Code! 
+Check all the includes. Steal Code!
 
 ### Image Options
 
@@ -178,12 +178,12 @@ Example Code --> `{% raw %}{% include feature/timelinejs.html  %}{% endraw %}`
 
 {% include feature/card.html header="This is a Card" text="The card features an image from the collection as a cap" objectid="demo_001" width="25" centered=true %}
 
-#### Include a Button 
+#### Include a Button
 
 - Buttons -- > `{% raw %}{% include feature/button.html text="Button Link to Somewhere" link="https://collectionbuilder.github.io/" color="success" %}{% endraw %}`
 
 {% include feature/button.html text="Button Link to Somewhere" link="https://collectionbuilder.github.io/" color="success" centered=true %}
-  
+
 #### Include an Alert
 
 - Alerts -- > `{% raw %}{% include feature/alert.html text="this is an *alert* that 'warns' a user" color="warning" align="center" %}{% endraw %}`
@@ -194,4 +194,4 @@ Example Code --> `{% raw %}{% include feature/timelinejs.html  %}{% endraw %}`
 
 - Modals -- > `{% raw %}{% include feature/modal.html button="This is a modal using a 'primary' colored button to invite clicking" title="when clicked:" text="A Modal will pop out a box with some more information" color="primary"  %}{% endraw %}`
 
-{% include feature/modal.html button="This is a modal using a 'primary' colored button to invite clicking" title="When clicked:" text="A Modal will pop out a box with some more information" color="primary"  %} 
+{% include feature/modal.html button="This is a modal using a 'primary' colored button to invite clicking" title="When clicked:" text="A Modal will pop out a box with some more information" color="primary"  %}

@@ -1,35 +1,18 @@
 ---
 # base CSS for collectionbuilder
 # includes some theming options
-# pulled in from "theme.yml" and "config-theme-colors.csv"
+# pulled in from "theme.yml"
 ---
 @charset "utf-8";
 
 /* base variables pulled from theme.yml */
 @forward "base" with (
   $base-font-family: {{ site.data.theme.base-font-family | default: '""' }},
-  $base-font-size: {{ site.data.theme.base-font-size | default: '""' }},
-  $text-color: {{ site.data.theme.text-color | default: '""' }},
-  $link-color: {{ site.data.theme.link-color | default: '""' }}
+  $base-font-size: {{ site.data.theme.base-font-size | default: '""' }}
 );
 
 /* individual CB page styles */
-@use "pages"; 
-
-/* theme colors pulled from config-theme-colors */
-{% assign btns = site.data.config-theme-colors | where_exp: "item","item.color != nil" %}
-{% if btns != empty %}
-@use "sass:map";
-@forward "theme-colors" with (
-  $link-color-base: {{ site.data.theme.link-color | default: '""' }},
-  $theme-colors: (
-    {% for btn in btns %}{% assign color = btn.color | strip %}{% if color != empty %}
-    "{{ btn.color_class | slugify }}": {{ color }}{% unless forloop.last %},{% endunless %}
-    {% endif %}{% endfor %}
-  )
-
-);
-{% endif %}
+@use "pages";
 
 /* pull in custom styles to override everything else */
 @use "custom";

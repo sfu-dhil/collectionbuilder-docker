@@ -1,4 +1,4 @@
-{% comment %} 
+{% comment %}
 
     Featured Terms button-links.
     This include creates a card with btn links to the Browse page from a set of automatically generated or manually selected terms. Either use the "field" option to auto generate *or* the "featured" option to manually create list of terms.
@@ -15,7 +15,7 @@
     - "header" = card header text in bar above card content (optional)
     - "heading_level" = customize the level of the heading if necessary for accessibility, choose "h1", "h2", "h3", etc (optional, default "h2")
     - "max" - max number of terms to display if auto generating (optional, default 5)
-    - "btn-color" - a bootstrap color class to theme the buttons. Can be any bootstrap template color (e.g. info, success) or outline (e.g. outline-info, outline-success), including colors created in config-theme-colors. (optional, default "primary")
+    - "btn-color" - a bootstrap color class to theme the buttons. Can be any bootstrap template color (e.g. info, success) or outline (e.g. outline-info, outline-success). (optional, default "primary")
 
     Requires CB's "array_count_uniq.rb" plugin!
 
@@ -26,8 +26,8 @@
 {%- else -%}
 
 
-{% comment %} 
-    Use termsField and termsMax to customize feature 
+{% comment %}
+    Use termsField and termsMax to customize feature
 {% endcomment %}
 {% assign termsField = include.field | default: "subject" %}
 {% assign termsMax = include.max | default: 5 %}

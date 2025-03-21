@@ -16,10 +16,10 @@
 <script>
 (function(){
     /* add collection map data */
-    var geodata = { "type": "FeatureCollection", "features": [ 
+    var geodata = { "type": "FeatureCollection", "features": [
     {% for item in items %}
     { "type":"Feature", "geometry":{ "type":"Point", "coordinates":[{{ item.longitude | strip }},{{ item.latitude | strip }}] }, "properties":
-    { 
+    {
         {% for f in fields %}{% if item[f.field] %}{{ f.field | escape | jsonify }}:{{ item[f.field] | strip | escape | jsonify }}, {%- endif -%}{%- endfor -%}
         {% if item.image_thumb %}"img": {{ item.image_thumb | relative_url | jsonify }},{% endif %}
         {% if item.display_template %}"template": {{ item.display_template | escape | jsonify }}, {%- endif -%}
@@ -27,11 +27,11 @@
         {% if item.image_alt_text %}"alt": {{ item.image_alt_text | escape | jsonify }}, {%- endif -%}
         {% if item.parentid %}"parent": {{ item.parentid | jsonify }}, {%- endif -%}
         "title": {{ item.title | escape | jsonify }},
-        "id": {{ item.objectid | jsonify }} 
+        "id": {{ item.objectid | jsonify }}
     } }{% unless forloop.last %}, {% endunless %}{% endfor %}
     ]};
 
-    /* check for url parameters and set initial view options */ 
+    /* check for url parameters and set initial view options */
     let url = new URL(window.location);
     var mapCenter = url.searchParams.get('location') ? url.searchParams.get('location').split(',') : [{{ site.data.theme.latitude | default: 46.727485 }}, {{ site.data.theme.longitude | default: -117.014185 }}];
     var mapZoom = url.searchParams.get('location') ? 16 : {{ site.data.theme.zoom-level | default: 5 }};
@@ -84,13 +84,13 @@
     searchCtrl.addTo(map);
     searchCtrl.indexFeatures(geodata.features, {{ fields | where: 'search','true' | map: 'field' | unshift: 'title' | jsonify }});{% endif %}
 
-    /* add fullscreen control */ 
+    /* add fullscreen control */
     map.addControl(new L.Control.Fullscreen());
 
     {% if site.data.theme.map-cluster == true %}
     /* create cluster group */
-    var markers = L.markerClusterGroup({ 
-        maxClusterRadius: {{ site.data.theme.map-cluster-radius | default: 15 }}, 
+    var markers = L.markerClusterGroup({
+        maxClusterRadius: {{ site.data.theme.map-cluster-radius | default: 15 }},
         singleMarkerMode: true,
         iconCreateFunction: function(cluster) {
             /* custom icon function, tweak default to add more alt text */
@@ -106,10 +106,10 @@
             var c = ' marker-cluster-' + csize;
             return new L.DivIcon({ html: '<div><span class="visually-hidden">' + csize +' cluster of </span><span>' + childCount + '</span><span class="visually-hidden"> items</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(40, 40) });
         }
-        {% if site.data.theme.map-search == true %}, removeOutsideVisibleBounds: false{% endif %} 
+        {% if site.data.theme.map-search == true %}, removeOutsideVisibleBounds: false{% endif %}
     });{% endif %}
 
-    /* get icons function */ 
+    /* get icons function */
     {% include helpers/get-icon.js %}
 
     /* object popup function */
@@ -128,14 +128,14 @@
         }
         // set up popup content
         var popupTemplate = '<h2 class="h4"><a class="text-dark" href="' + itemHref + '">' +
-            feature.properties.title + '</a></h2><div class="text-center"><a href="' + itemHref + 
+            feature.properties.title + '</a></h2><div class="text-center"><a href="' + itemHref +
             '" >' + thumbImg + '</a></div><p>';
         {% for f in fields %}{% if f.display_name %}
         if (feature.properties[{{ f.field | escape | jsonify }}]) {
-            popupTemplate += '<strong>{{ f.display_name }}:</strong> ' + feature.properties[{{ f.field | escape | jsonify }}] + '<br>'; 
+            popupTemplate += '<strong>{{ f.display_name }}:</strong> ' + feature.properties[{{ f.field | escape | jsonify }}] + '<br>';
         }
         {% endif %}{% endfor %}
-        popupTemplate += '</p><div class="text-center"><a class="btn btn-light" href="' + itemHref + '" >View Item</a></div>';
+        popupTemplate += '</p><div class="text-center"><a class="btn btn-primary" href="' + itemHref + '" >View Item</a></div>';
         layer.bindPopup(popupTemplate);
     }
     function objectMarkers(feature,latlng) {
@@ -150,7 +150,7 @@
         pointToLayer: objectMarkers
     }){% if site.data.theme.map-cluster != true %}.addTo(map);{% else %};
     map.addLayer(markers);{% endif %}
-    
+
     {% if site.data.theme.map-cluster == true and site.data.theme.map-search == true %}
     /* uncluster when search is clicked */
     document.querySelector('a.button').addEventListener("click", function() {
@@ -161,16 +161,16 @@
         markers.enableClustering();
         document.querySelector('input.search-input').value = "";
     });{% endif %}
-    
-    /* show popup if id in URL query */ 
+
+    /* show popup if id in URL query */
     if (markerFilter != "") {
         {% if site.data.theme.map-cluster == true %}
         markers.eachLayer(layer => {
             if (layer.feature.properties.id === markerFilter) {
-                /* uncluster clusters, then show */ 
+                /* uncluster clusters, then show */
                 if (markers.getVisibleParent(layer)["_childCount"]) {
                     markers.getVisibleParent(layer).spiderfy();
-                } 
+                }
                 layer.openPopup();
             }
         });

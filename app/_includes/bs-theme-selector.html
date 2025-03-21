@@ -1,0 +1,32 @@
+<ul class="navbar-nav ms-3">
+    <li class="nav-item dropdown">
+        <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center show"
+                role="button" data-bs-toggle="dropdown" aria-expanded="false"
+        >
+            {% include feature/icon.html icon="sun-fill" class="theme-icon-active me-2 opacity-50" %}
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light">
+                    {% include feature/icon.html icon="sun-fill" class="" class="me-2 opacity-50" %}
+                    Light
+                    {% include feature/icon.html icon="check2" class="ms-auto d-none" %}
+                </button>
+            </li>
+            <li>
+                <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark">
+                    {% include feature/icon.html icon="moon-stars-fill" class="" class="me-2 opacity-50" %}
+                    Dark
+                    {% include feature/icon.html icon="check2" class="ms-auto d-none" %}
+                </button>
+            </li>
+            <li>
+                <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto">
+                    {% include feature/icon.html icon="circle-half" class="" class="me-2 opacity-50" %}
+                    Auto
+                    {% include feature/icon.html icon="check2" class="ms-auto d-none" %}
+                </button>
+            </li>
+        </ul>
+    </li>
+</ul>
