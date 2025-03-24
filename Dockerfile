@@ -9,12 +9,15 @@ RUN apt-get update \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
+# imagemagick policy change to allow pdfs
+COPY docker/image-policy.xml /etc/ImageMagick-6/policy.xml
+
 # install ruby deps
-COPY /app/Gemfile /app/Gemfile.lock /app/
+COPY app/Gemfile /app/Gemfile.lock /app/
 RUN bundle install
 
 # add project files
-COPY /app /app
+COPY app /app
 
 # start jekyll serve
 CMD ["jekyll", "serve", "--host=0.0.0.0"]

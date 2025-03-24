@@ -14,7 +14,7 @@ def process_image(filename, output_filename, size)
     MiniMagick.convert do |convert|
       convert << filename
       convert.resize(size)
-      convert.flatten
+      # convert.flatten
       convert << output_filename
     end
   rescue StandardError => e
@@ -46,9 +46,10 @@ task :resize_images, [:new_size, :new_format, :input_dir, :output_dir] do |_t, a
 
   # ensure output directory exists
   FileUtils.mkdir_p(output_dir) unless Dir.exist?(output_dir)
-  
+
   # support these file extensions
   EXTNAME_TYPE_MAP = {
+    '.webp' => :image,
     '.jpeg' => :image,
     '.jpg' => :image,
     '.png' => :image,
@@ -57,22 +58,22 @@ task :resize_images, [:new_size, :new_format, :input_dir, :output_dir] do |_t, a
   }.freeze
 
   # set new format
-  if args.new_format != false 
+  if args.new_format != false
     # check for valid extension
     if EXTNAME_TYPE_MAP[args.new_format]
       new_format = args.new_format
-    else 
+    else
       puts "Invalid new format #{args.new_format}. resize_images not run."
       exit
     end
-  else 
+  else
     new_format = false
   end
 
   # Iterate over all files in the objects directory.
   Dir.glob(File.join(objects_dir, '*')).each do |filename|
-    
-    # Skip subdirectories 
+
+    # Skip subdirectories
     if File.directory?(filename)
       next
     end
@@ -89,10 +90,10 @@ task :resize_images, [:new_size, :new_format, :input_dir, :output_dir] do |_t, a
     base_filename = File.basename(filename, '.*').downcase
 
     # Create new filename
-    if args.new_format != false 
+    if args.new_format != false
       new_extension = new_format
-    else 
-      new_extension = extname 
+    else
+      new_extension = extname
     end
     new_filename = File.join(output_dir, "#{base_filename}#{new_extension}")
 
@@ -100,12 +101,12 @@ task :resize_images, [:new_size, :new_format, :input_dir, :output_dir] do |_t, a
     if File.exist?(new_filename)
       puts "new filename '#{new_filename}' already exists, skipping!"
       next
-    else 
+    else
       # resize
       process_image(filename, new_filename, new_size)
     end
-    
+
   end
-  
+
   puts "\e[32mImages output to '#{output_dir}'.\e[0m"
 end

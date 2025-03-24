@@ -136,6 +136,23 @@ function triggerGithubAction() {
 
 > Note: when running you will need to give permission to run the app and you will likely get a warning since it is not verified with google
 
+## Build objects (generate_derivatives)
+
+    docker run --rm -it \
+        -v <PATH TO YOUR _data folder>:/app/_data \
+        -v <PATH TO YOUR objects folder>:/app/objects \
+        -v <PATH TO YOUR pages folder>:/app/pages \
+        -v <PATH TO YOUR _config.yml>:/app/_config.yml \
+        -v <PATH TO YOUR favicon.ico>:/app/favicon.ico \
+        -v <export path>:/app/_site \
+        dhilsfu/collectionbuilder-docker rake generate_derivatives
+
+Example using demo data:
+
+    docker run --rm -it \
+        -v ${PWD}/demo/objects:/app/objects \
+        dhilsfu/collectionbuilder-docker rake generate_derivatives
+
 
 ## Build for deployment
 
@@ -166,12 +183,12 @@ Example using demo data:
 
 Add a new dep:
 
-    docker run --rm -it -v ${PWD}:/app -w /app ruby:3.4-bookworm bundle add <GEM NAME>
+    docker run --rm -it --platform linux/amd64 -v ${PWD}/app:/app -w /app ruby:3.4-bookworm bundle add <GEM NAME>
 
 Update `Gemfile` and `Gemfile.lock` (if you edit `Gemfile` directly):
 
-    docker run --rm -it -v ${PWD}:/app -w /app ruby:3.4-bookworm bundle install
+    docker run --rm -it --platform linux/amd64 -v ${PWD}/app:/app -w /app ruby:3.4-bookworm bundle install
 
 Update just `Gemfile.lock` (if it's outdated or removed for some reason):
 
-    docker run --rm -it -v ${PWD}:/app -w /app ruby:3.4-bookworm bundle lock
+    docker run --rm -it --platform linux/amd64 -v ${PWD}/app:/app -w /app ruby:3.4-bookworm bundle lock

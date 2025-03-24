@@ -4,12 +4,12 @@
 # create small and thumb images for image and pdf files in the 'objects' folder
 ###############################################################################
 
-require 'image_optim' unless Gem.win_platform?
+require 'image_optim'
 require 'mini_magick'
 
 def process_and_optimize_image(filename, file_type, output_filename, size, density)
-  image_optim = ImageOptim.new(svgo: false) unless Gem.win_platform?
-  if filename == output_filename && file_type == :image && !Gem.win_platform?
+  image_optim = ImageOptim.new(svgo: false)
+  if filename == output_filename && file_type == :image
     puts "Optimizing: #{filename}"
     begin
       image_optim.optimize_image!(output_filename)
@@ -32,12 +32,12 @@ def process_and_optimize_image(filename, file_type, output_filename, size, densi
         magick.call
       else
         image = MiniMagick::Image.open(filename)
-        image.format('jpg')
+        image.format('webp')
         image.resize(size)
-        image.flatten
+        # image.flatten
         image.write(output_filename)
       end
-      image_optim.optimize_image!(output_filename) unless Gem.win_platform?
+      image_optim.optimize_image!(output_filename)
     rescue StandardError => e
       puts "Error creating #{filename}: #{e.message}"
     end
@@ -70,6 +70,7 @@ task :generate_derivatives, [:thumbs_size, :small_size, :density, :missing, :com
 
   # support these file types
   EXTNAME_TYPE_MAP = {
+    '.webp' => :image,
     '.jpeg' => :image,
     '.jpg' => :image,
     '.pdf' => :pdf,
@@ -110,7 +111,7 @@ task :generate_derivatives, [:thumbs_size, :small_size, :density, :missing, :com
       end
 
       # Generate the thumb image.
-      thumb_filename = File.join(thumb_image_dir, "#{base_filename}_th.jpg")
+      thumb_filename = File.join(thumb_image_dir, "#{base_filename}_th.webp")
       if args.missing == 'false' || !File.exist?(thumb_filename)
         process_and_optimize_image(filename, file_type, thumb_filename, args.thumbs_size, args.density)
       else
@@ -118,7 +119,7 @@ task :generate_derivatives, [:thumbs_size, :small_size, :density, :missing, :com
       end
 
       # Generate the small image.
-      small_filename = File.join([small_image_dir, "#{base_filename}_sm.jpg"])
+      small_filename = File.join([small_image_dir, "#{base_filename}_sm.webp"])
       if (args.missing == 'false') || !File.exist?(small_filename)
         process_and_optimize_image(filename, file_type, small_filename, args.small_size, args.density)
       else

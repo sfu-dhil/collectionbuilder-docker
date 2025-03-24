@@ -1,6 +1,7 @@
 services:
   collectionbuilder:
-    container_name: collectionbuilder_serve
+    platform: linux/amd64
+    container_name: collectionbuilder
     # image: dhilsfu/collectionbuilder-docker
     build:
       context: .
