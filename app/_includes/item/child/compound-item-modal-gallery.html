@@ -47,7 +47,7 @@
                                     <div class="modal-title w-100" id="{{ child.objectid }}ModalLabel">
                                         <div class="row">
                                             {% capture stopMedia %}{% if child.display_template == 'video' %}{% if child.object_location contains 'vimeo' %}vimeo{% elsif child.object_location contains 'youtu' %}youtube{% else %}video{% endif %}{% elsif child.display_template == 'audio' %}audio{% else %}{% endif %}{% endcapture %}
-                                            <div class="col-12 text-end">
+                                            <div class="col-12 text-end mb-2">
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                                                 onclick="{% if stopMedia != '' %}stopMedia('{{ child.objectid }}','{{ stopMedia }}');{% endif %}history.pushState('', '', window.location.pathname)"></button>
                                             </div>

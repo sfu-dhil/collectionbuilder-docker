@@ -54,18 +54,20 @@ function makeCard(obj) {
     card += '<p class="card-text">';
     {% for f in fields %}{% unless f.hidden == 'true' %}
     if(obj[{{ f.field | jsonify }}]){
-    {% if f.display_name %}card += '<strong>{{ f.display_name }}:</strong> ';{% endif %}
-    {% if f.btn == 'true' %}
-    var btns = obj[{{ f.field | jsonify }}].split(";");
-    for (var i = 0, len = btns.length; i < len; i++) {
-        if(btns[i] != "") {
-        card += '<a class="btn btn-sm btn-secondary m-1 text-wrap" href="{{ page.url | relative_url }}#' + encodeURIComponent(btns[i].trim()) + '">' + btns[i].trim() + '</a>';
+        {% if f.display_name %}card += '<strong>{{ f.display_name }}:</strong> ';{% endif %}
+        var items = obj[{{ f.field | jsonify }}].split(";");
+        for (var i = 0; i < items.length; i++) {
+            if(items[i] != "") {
+                {% if f.btn == 'true' %}
+                    card += '<a class="btn btn-sm btn-primary m-1 text-wrap" href="{{ page.url | relative_url }}#' + encodeURIComponent(items[i].trim()) + '">' + items[i].trim() + '</a>';
+                {% elsif f.badge == 'true' %}
+                    card += '<span class="badge rounded-pill text-bg-secondary me-1">' + items[i].trim() + '</span>';
+                {% else %}
+                    card += '<span class="me-1">' + items[i].trim() + '</span>';
+                {% endif %}
+            }
         }
-    }
-    {% else %}
-    card += obj[{{ f.field | jsonify }}];
-    {% endif %}
-    {% unless forloop.last %}card += '<br>';{% endunless %}
+        {% unless forloop.last %}card += '<br>';{% endunless %}
     }
     {% endunless %}{% endfor %}
     card += '</p>';

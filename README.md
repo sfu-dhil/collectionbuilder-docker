@@ -10,7 +10,7 @@ Based on [collectionbuilder-csv](https://github.com/CollectionBuilder/collection
 
 A shell website (no content)
 
-    docker run --rm -it \
+    docker run --rm -it --platform linux/amd64  \
         -p 4000:4000 \
         dhilsfu/collectionbuilder-docker
 
@@ -18,7 +18,7 @@ A shell website (no content)
 
 The image doesn't contain any site content by default so you will need to mount your content into relevant the container folders (`/app/_data/<your metadata file>`, `/app/_data/<your theme file>`, `/app/pages/<your about page>`, and `/app/_config.yml`)
 
-    docker run --rm -it \
+    docker run --rm -it --platform linux/amd64  \
         -p 4000:4000 \
         -v <PATH TO YOUR metadata csv file>:/app/_data/<metadata csv file> \
         -v <PATH TO YOUR theme yaml file>:/app/_data/theme.yml \
@@ -31,7 +31,7 @@ The image doesn't contain any site content by default so you will need to mount 
 
 Example using demo data:
 
-    docker run --rm -it \
+    docker run --rm -it --platform linux/amd64  \
         -p 4000:4000 \
         -v ${PWD}/demo/_data/:/app/_data \
         -v ${PWD}/demo/objects:/app/objects \
@@ -44,7 +44,7 @@ Example using demo data:
 
 You can also override the entire `_data` and/or `pages` folders if you need additional metadata or page customization
 
-    docker run --rm -it \
+    docker run --rm -it --platform linux/amd64  \
         -p 4000:4000 \
         -v <PATH TO YOUR _data folder>:/app/_data \
         -v <PATH TO YOUR objects folder>:/app/objects \
@@ -55,7 +55,7 @@ You can also override the entire `_data` and/or `pages` folders if you need addi
 
 Example using demo data:
 
-    docker run --rm -it \
+    docker run --rm -it --platform linux/amd64  \
         -p 4000:4000 \
         -v ${PWD}/demo/_data:/app/_data \
         -v ${PWD}/demo/objects:/app/objects \
@@ -77,7 +77,7 @@ This uses the jekyll `:site` `:after_init` hook so it will only trigger once per
 
 Example using demo data:
 
-    docker run --rm -it \
+    docker run --rm -it --platform linux/amd64  \
         -p 4000:4000 \
         -e METADATA_FILE_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-ObrBYNpd77GWsWu1WYReYw6AEOde_zVay6KRVXimG913YNp9J5fR6qQMOizAs9A2EznC7aIVOlrX/pub?gid=0&single=true&output=csv" \
         -e METADATA_FILE_NAME=metadata.csv \
@@ -138,7 +138,7 @@ function triggerGithubAction() {
 
 ## Build objects (generate_derivatives)
 
-    docker run --rm -it \
+    docker run --rm -it --platform linux/amd64  \
         -v <PATH TO YOUR _data folder>:/app/_data \
         -v <PATH TO YOUR objects folder>:/app/objects \
         -v <PATH TO YOUR pages folder>:/app/pages \
@@ -149,7 +149,7 @@ function triggerGithubAction() {
 
 Example using demo data:
 
-    docker run --rm -it \
+    docker run --rm -it --platform linux/amd64  \
         -v ${PWD}/demo/objects:/app/objects \
         dhilsfu/collectionbuilder-docker rake generate_derivatives
 
@@ -158,7 +158,7 @@ Example using demo data:
 
 You can build the production version by additionally mounting the `/app/_site` and running the `rake deploy`
 
-    docker run --rm -it \
+    docker run --rm -it --platform linux/amd64  \
         -v <PATH TO YOUR _data folder>:/app/_data \
         -v <PATH TO YOUR objects folder>:/app/objects \
         -v <PATH TO YOUR pages folder>:/app/pages \
@@ -169,7 +169,7 @@ You can build the production version by additionally mounting the `/app/_site` a
 
 Example using demo data:
 
-    docker run --rm -it \
+    docker run --rm -it --platform linux/amd64  \
         -v ${PWD}/demo/_data:/app/_data \
         -v ${PWD}/demo/objects:/app/objects \
         -v ${PWD}/demo/pages:/app/pages \
