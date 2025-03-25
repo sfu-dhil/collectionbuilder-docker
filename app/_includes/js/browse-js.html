@@ -123,22 +123,8 @@ function filterItems(arr,q) {
     loadingIcon.classList.add("d-none");
 };
 
-/* Fisher-Yates shuffle https://bost.ocks.org/mike/shuffle/ */
-function shuffle(array) {
-    var m = array.length, t, i;
-    while (m) {
-        i = Math.floor(Math.random() * m--);
-        t = array[m];
-        array[m] = array[i];
-        array[i] = t;
-    }
-    return array;
-}
-
 /* init browse page */
-
-/* randomize items once at page load */
-shuffle(items);
+sorting(items, 'title');
 
 /* set some elements */
 var loadingIcon = document.querySelector("#loadingIcon");
@@ -213,14 +199,8 @@ sortOptions.forEach((button) => {
     button.classList.add("active");
     sortFilter.innerHTML = display_name;
     // send to sort and filter
-    if (field != 'random') {
-        sorting(items, field);
-        filterItems(items, query);
-    }
-    else {
-        shuffle(items);
-        filterItems(items, query);
-    }
+    sorting(items, field);
+    filterItems(items, query);
   });
 });
 
