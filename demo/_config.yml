@@ -52,8 +52,8 @@ metadata: demo-compoundobjects-allmedia
 generate-derivatives-on-build: true
 # use to set optional build args (:thumbs_size, :small_size, :density, :input_dir)
 # `missing` is always set to true and `compress_originals` is always set to false with this command
-generate-derivatives-arguments:
-  input_dir: objects
+# generate-derivatives-arguments:
+#   input_dir: objects
 
 ##########
 # Site/Organization Branding
