@@ -17,4 +17,3 @@ gem 'mini_magick'
 
 gem 'image_optim', platforms: :ruby
 gem 'image_optim_pack', platforms: :ruby
-

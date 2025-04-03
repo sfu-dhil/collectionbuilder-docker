@@ -40,6 +40,16 @@ metadata: metadata
 #     filter: 'objectid'
 
 ##########
+# DERIVATIVES SETTINGS
+#
+# use to automatically build derivatives when generating the site
+generate-derivatives-on-build: false
+# use to set optional build args (:thumbs_size, :small_size, :density, :input_dir)
+# `missing` is always set to true and `compress_originals` is always set to false with this command
+generate-derivatives-arguments:
+  input_dir: objects
+
+##########
 # Site/Organization Branding
 #   Enter information for your organization (replacing the CDIL links and name below) if you'd like to brand your site with a logo
 #   To remove the branding, comment out these values, or delete them.

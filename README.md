@@ -66,11 +66,9 @@ Example using demo data:
 
 ### Loading metadata from remote url/google sheets
 
-The new `remote_csv_import.rb` plugin optionally allows you to automatically pull a csv file from a remote url via environment variables.
+The new `cb_remote_csv.rb` plugin optionally allows you to automatically pull a csv file from a remote url via environment variables.
 
 `METADATA_FILE_URL`: the publicly accessible url. For google sheets see the [CollectionBuilder Docs](https://collectionbuilder.github.io/cb-docs/docs/walkthroughs/sheets-walkthrough/#2-publish-your-google-sheet-to-the-web) on how to make your Google Sheets publicly accessible.
-
-`METADATA_FILE_NAME`: the name to use for the csv file in the `_data` folder (default: `metadata.csv`). This will overwrite an existing file so name with care.
 
 This uses the jekyll `:site` `:after_init` hook so it will only trigger once per build (not quite as robust). When developing locally, you will need to trigger a rebuild to re-fetch any changes from the remote file (ex: `touch pages/index.md` or add a space to a page file comment and save).
 
@@ -80,7 +78,6 @@ Example using demo data:
     docker run --rm -it --platform linux/amd64  \
         -p 4000:4000 \
         -e METADATA_FILE_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-ObrBYNpd77GWsWu1WYReYw6AEOde_zVay6KRVXimG913YNp9J5fR6qQMOizAs9A2EznC7aIVOlrX/pub?gid=0&single=true&output=csv" \
-        -e METADATA_FILE_NAME=metadata.csv \
         -v ${PWD}/demo/_data:/app/_data \
         -v ${PWD}/demo/objects:/app/objects \
         -v ${PWD}/demo/pages:/app/pages \
@@ -92,7 +89,7 @@ Example using demo data:
 
 In addition to using `METADATA_FILE_URL`, you can use a google sheets script to trigger the github pages workflow.
 
-1. Copy `.github/workflows/jekyll.yml` into your project and modify the `METADATA_FILE_URL` and `METADATA_FILE_NAME` environment variables as needed.
+1. Copy `.github/workflows/jekyll.yml` into your project and modify the `METADATA_FILE_URL` environment variable as needed.
 1. Generate a [personal access token](https://github.com/settings/tokens) to trigger the workflow. Click `Generate new token` -> `Generate new token` (__not__ classic)
     - Name: `Google Sheets Trigger for <repo>`
     - Resource owner: _the owner of the repo_ (ex: your organization's account or your user account)
@@ -106,31 +103,39 @@ In addition to using `METADATA_FILE_URL`, you can use a google sheets script to 
     - Click `Project Settings` (might need to expand side menu) -> `Add script property` x3
     - property: `GITHUB_TOKEN` value: _the previously generated personal access token_
     - property: `GITHUB_REPO` value: _the full github repo_ (account and name ex: `sfu-dhil/collectionbuilder-docker`)
-    - property: `GITHUB_WORKFLOW_ID` value: _the workflow id_ (You can use the workflow filename ex: `jekyll.yml`)
+    - property: `GITHUB_PAGES_WORKFLOW_ID` value: _the workflow id_ for the github pages action (You can use the workflow filename ex: `jekyll.yml`). default is `jekyll.yml`
+    - property: `GITHUB_UPDATES_WORKFLOW_ID` value: _the workflow id_ for the update action (You can use the workflow filename ex: `updates.yml`). default is `updates.yml`
 
 
 ```javascript
 function onOpen() {
   SpreadsheetApp.getUi()
-    .createMenu('⚡ Custom functions')
-    .addItem('Publish data to github pages', 'triggerGithubAction')
+    .createMenu('⚡ Collection Builder Github Functions')
+    .addItem('Publish data to github pages', 'triggerGithubPagesAction')
+    .addItem('Create github pull request with updates', 'triggerUpdateObjectsAction')
     .addToUi()
 }
 
-function triggerGithubAction() {
-  const properties = PropertiesService.getScriptProperties()
-  const url = `https://api.github.com/repos/${properties.getProperty('GITHUB_REPO')}/actions/workflows/${properties.getProperty('GITHUB_WORKFLOW_ID')}/dispatches`
-  const params = {
-    method: 'post',
-    contentType: 'application/json',
-    payload: JSON.stringify({ 'ref': 'main' }),
-    headers: {
-      Accept: 'application/vnd.github+json',
-      Authorization: `Bearer ${properties.getProperty('GITHUB_TOKEN')}`,
-      'X-GitHub-Api-Version': '2022-11-28',
-    },
-  }
-  UrlFetchApp.fetch(url, params)
+const properties = PropertiesService.getScriptProperties()
+const GITHUB_PAGES_URL = `https://api.github.com/repos/${properties.getProperty('GITHUB_REPO')}/actions/workflows/${properties.getProperty('GITHUB_PAGES_WORKFLOW_ID') || 'jekyll.yml'}/dispatches`
+const GITHUB_UPDATE_OBJECTS_URL = `https://api.github.com/repos/${properties.getProperty('GITHUB_REPO')}/actions/workflows/${properties.getProperty('GITHUB_UPDATES_WORKFLOW_ID') || 'updates.yml'}/dispatches`
+const GITHUB_POST_PARAMS = {
+  method: 'post',
+  contentType: 'application/json',
+  payload: JSON.stringify({ 'ref': 'main' }),
+  headers: {
+    Accept: 'application/vnd.github+json',
+    Authorization: `Bearer ${properties.getProperty('GITHUB_TOKEN')}`,
+    'X-GitHub-Api-Version': '2022-11-28',
+  },
+}
+
+function triggerGithubPagesAction() {
+  UrlFetchApp.fetch(GITHUB_PAGES_URL, GITHUB_POST_PARAMS)
+}
+
+function triggerUpdateObjectsAction() {
+  UrlFetchApp.fetch(GITHUB_UPDATE_OBJECTS_URL, GITHUB_POST_PARAMS)
 }
 ```
 

@@ -1,4 +1,4 @@
-name: Deploy Jekyll site to Pages
+name: Create pull request adding new metadata, objects, and derivatives triggered from google sheets
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -9,17 +9,15 @@ on:
     types:
     - webhook
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+# Sets permissions of the GITHUB_TOKEN to generating pull requests
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
+  pull-requests: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+# Allow only one concurrent pull request (latest).
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: 'updates'
+  cancel-in-progress: true
 
 env:
   METADATA_FILE_URL: https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-ObrBYNpd77GWsWu1WYReYw6AEOde_zVay6KRVXimG913YNp9J5fR6qQMOizAs9A2EznC7aIVOlrX/pub?gid=0&single=true&output=csv
@@ -38,20 +36,18 @@ jobs:
           -v ${{ github.workspace }}/demo/objects:/app/objects \
           -v ${{ github.workspace }}/demo/pages:/app/pages \
           -v ${{ github.workspace }}/demo/_config-github-pages.yml:/app/_config.yml \
-          -v ${{ github.workspace }}/_site:/app/_site \
           dhilsfu/collectionbuilder-docker rake deploy
-    - name: Upload artifact
-      # Automatically uploads an artifact from the './_site' directory by default
-      uses: actions/upload-pages-artifact@v3
 
-  # Deployment job
-  deploy:
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    steps:
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v7
+      with:
+        branch: create-pull-request/updates
+        delete-branch: true
+        commit-message: Updated metadata, objects, and derivatives
+        title: Updated metadata, objects, and derivatives from google sheets (automated)
+        body: |
+          Includes latest updated content from google sheets
+
+          - Use the `object_download_remote_url` column to automatically download new remote resources
+          - Enable `generate-derivatives-on-build` in the `_config.yml` to generate the derivatives
+
