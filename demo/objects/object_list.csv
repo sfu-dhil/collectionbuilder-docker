@@ -1,6 +1,7 @@
 filename,object_location,image_small,image_thumb
 210a.jpg,/objects/210a.jpg,/objects/small/210a_sm.webp,/objects/thumbs/210a_th.webp
 210b.jpg,/objects/210b.jpg,/objects/small/210b_sm.webp,/objects/thumbs/210b_th.webp
+bbb_splash.png,/objects/bbb_splash.png,/objects/small/bbb_splash_sm.webp,/objects/thumbs/bbb_splash_th.webp
 demo_001.jpg,/objects/demo_001.jpg,/objects/small/demo_001_sm.webp,/objects/thumbs/demo_001_th.webp
 demo_002.pdf,/objects/demo_002.pdf,/objects/small/demo_002_sm.webp,/objects/thumbs/demo_002_th.webp
 demo_003.jpg,/objects/demo_003.jpg,/objects/small/demo_003_sm.webp,/objects/thumbs/demo_003_th.webp
