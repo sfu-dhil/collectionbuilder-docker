@@ -2,6 +2,8 @@
 
 Based on [collectionbuilder-csv](https://github.com/CollectionBuilder/collectionbuilder-csv/) [(commit 2b61486)](https://github.com/CollectionBuilder/collectionbuilder-csv/tree/2b6148622e85b67b9a921dfc320474cf3e7d83b9), this repository tries to make a base docker image for collection builder that is easily customizable and deployable for various projects and build pipelines.
 
+See the [demo](https://github.com/sfu-dhil/collectionbuilder-docker-demo) for an example.
+
 ## Requirements
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
