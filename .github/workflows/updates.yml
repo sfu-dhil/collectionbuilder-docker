@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  METADATA_FILE_URL: https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-ObrBYNpd77GWsWu1WYReYw6AEOde_zVay6KRVXimG913YNp9J5fR6qQMOizAs9A2EznC7aIVOlrX/pub?gid=0&single=true&output=csv
+  METADATA_FILE_URL: <GOOGLE SHEETS PUBLIC URL>
 
 jobs:
   build:
@@ -32,16 +32,17 @@ jobs:
       run: |
         docker run --rm \
           -e METADATA_FILE_URL="${{ env.METADATA_FILE_URL }}" \
-          -v ${{ github.workspace }}/demo/_data:/app/_data \
-          -v ${{ github.workspace }}/demo/objects:/app/objects \
-          -v ${{ github.workspace }}/demo/pages:/app/pages \
-          -v ${{ github.workspace }}/demo/_config-github-pages.yml:/app/_config.yml \
+          -v ${{ github.workspace }}/app/_data:/app/_data \
+          -v ${{ github.workspace }}/app/objects:/app/objects \
+          -v ${{ github.workspace }}/app/pages:/app/pages \
+          -v ${{ github.workspace }}/app/_config-github-pages.yml:/app/_config.yml \
           dhilsfu/collectionbuilder-docker rake deploy
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v7
       with:
         branch: create-pull-request/updates
+        sign-commits: true
         delete-branch: true
         commit-message: Updated metadata, objects, and derivatives
         title: Updated metadata, objects, and derivatives from google sheets (automated)

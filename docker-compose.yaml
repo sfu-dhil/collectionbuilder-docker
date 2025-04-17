@@ -10,22 +10,8 @@ services:
     volumes:
       # code for development
       - ./app:/app
-
-      # override specific content folders with demo content
-      - ./demo/objects:/app/objects
-      - ./demo/pages:/app/pages
-      - ./demo/_config.yml:/app/_config.yml
-
-      # load just the demo metadata and theme in
-      - ./demo/_data/demo-compoundobjects-allmedia.csv:/app/_data/demo-compoundobjects-allmedia.csv
-      - ./demo/_data/theme.yml:/app/_data/theme.yml
-      # or override the entire _data folder
-      # - ./demo/_data:/app/_data
-
-      # don't touch the _site folder
+      # don't externally mount the container's _site folder (where static builds are outputted)
       - /app/_site
-    environment:
-      - METADATA_FILE_URL=https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-ObrBYNpd77GWsWu1WYReYw6AEOde_zVay6KRVXimG913YNp9J5fR6qQMOizAs9A2EznC7aIVOlrX/pub?gid=0&single=true&output=csv
     healthcheck:
       test: ["CMD-SHELL", "curl --fail http://localhost:4000/ || exit 1"]
       interval: 2s

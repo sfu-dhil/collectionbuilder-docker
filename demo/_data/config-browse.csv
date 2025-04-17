@@ -1,6 +1,0 @@
-field,display_name,btn,badge,hidden,sort_name
-date,Date,,,,Date
-creator,Creator,,,,
-subject,,true,,,
-location,,true,,,
-identifier,,,true,true,Identifier

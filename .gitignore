@@ -10,5 +10,3 @@ vendor/
 
 # Ignore mac files
 .DS_Store
-
-app/_data/demo-*

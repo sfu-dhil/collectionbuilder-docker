@@ -29,17 +29,6 @@ The image doesn't contain any site content by default so you will need to mount 
         dhilsfu/collectionbuilder-docker
 > will run `jekyll serve --host=0.0.0.0` allowing you access your content at `http://localhost:4000`
 
-Example using demo data:
-
-    docker run --rm -it --platform linux/amd64  \
-        -p 4000:4000 \
-        -v ${PWD}/demo/_data/:/app/_data \
-        -v ${PWD}/demo/objects:/app/objects \
-        -v ${PWD}/demo/pages:/app/pages \
-        -v ${PWD}/demo/_config.yml:/app/_config.yml \
-        -v ${PWD}/demo/favicon.ico:/app/favicon.ico \
-        dhilsfu/collectionbuilder-docker
-
 ### Loading advanced content & pages
 
 You can also override the entire `_data` and/or `pages` folders if you need additional metadata or page customization
@@ -53,17 +42,6 @@ You can also override the entire `_data` and/or `pages` folders if you need addi
         -v <PATH TO YOUR favicon.ico>:/app/favicon.ico \
         dhilsfu/collectionbuilder-docker
 
-Example using demo data:
-
-    docker run --rm -it --platform linux/amd64  \
-        -p 4000:4000 \
-        -v ${PWD}/demo/_data:/app/_data \
-        -v ${PWD}/demo/objects:/app/objects \
-        -v ${PWD}/demo/pages:/app/pages \
-        -v ${PWD}/demo/_config.yml:/app/_config.yml \
-        -v ${PWD}/demo/favicon.ico:/app/favicon.ico \
-        dhilsfu/collectionbuilder-docker
-
 ### Loading metadata from remote url/google sheets
 
 The new `cb_remote_csv.rb` plugin optionally allows you to automatically pull a csv file from a remote url via environment variables.
@@ -72,16 +50,14 @@ The new `cb_remote_csv.rb` plugin optionally allows you to automatically pull a 
 
 This uses the jekyll `:site` `:after_init` hook so it will only trigger once per build (not quite as robust). When developing locally, you will need to trigger a rebuild to re-fetch any changes from the remote file (ex: `touch pages/index.md` or add a space to a page file comment and save).
 
-
-Example using demo data:
-
     docker run --rm -it --platform linux/amd64  \
         -p 4000:4000 \
-        -e METADATA_FILE_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-ObrBYNpd77GWsWu1WYReYw6AEOde_zVay6KRVXimG913YNp9J5fR6qQMOizAs9A2EznC7aIVOlrX/pub?gid=0&single=true&output=csv" \
-        -v ${PWD}/demo/_data:/app/_data \
-        -v ${PWD}/demo/objects:/app/objects \
-        -v ${PWD}/demo/pages:/app/pages \
-        -v ${PWD}/demo/favicon.ico:/app/favicon.ico \
+        -e METADATA_FILE_URL="<GOOGLE SHEETS PUBLIC URL>" \
+        -v <PATH TO YOUR _data folder>:/app/_data \
+        -v <PATH TO YOUR objects folder>:/app/objects \
+        -v <PATH TO YOUR pages folder>:/app/pages \
+        -v <PATH TO YOUR _config.yml>:/app/_config.yml \
+        -v <PATH TO YOUR favicon.ico>:/app/favicon.ico \
         dhilsfu/collectionbuilder-docker
 
 
@@ -152,13 +128,6 @@ function triggerUpdateObjectsAction() {
         -v <export path>:/app/_site \
         dhilsfu/collectionbuilder-docker rake generate_derivatives
 
-Example using demo data:
-
-    docker run --rm -it --platform linux/amd64  \
-        -v ${PWD}/demo/objects:/app/objects \
-        dhilsfu/collectionbuilder-docker rake generate_derivatives
-
-
 ## Build for deployment
 
 You can build the production version by additionally mounting the `/app/_site` and running the `rake deploy`
@@ -171,18 +140,6 @@ You can build the production version by additionally mounting the `/app/_site` a
         -v <PATH TO YOUR favicon.ico>:/app/favicon.ico \
         -v <export path>:/app/_site \
         dhilsfu/collectionbuilder-docker rake deploy
-
-Example using demo data:
-
-    docker run --rm -it --platform linux/amd64  \
-        -v ${PWD}/demo/_data:/app/_data \
-        -v ${PWD}/demo/objects:/app/objects \
-        -v ${PWD}/demo/pages:/app/pages \
-        -v ${PWD}/demo/_config.yml:/app/_config.yml \
-        -v ${PWD}/demo/favicon.ico:/app/favicon.ico \
-        -v ${PWD}/_site:/app/_site \
-        dhilsfu/collectionbuilder-docker rake deploy
-
 
 ## Update Gemfile / Gemfile.lock
 
