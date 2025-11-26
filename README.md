@@ -1,3 +1,6 @@
+![Docker Image Latest Badge](https://ghcr-badge.egpl.dev/sfu-dhil/collectionbuilder-docker/latest_tag?trim=major&label=latest)
+![Docker Image Size badge](https://ghcr-badge.egpl.dev/sfu-dhil/collectionbuilder-docker/size)
+
 # CollectionBuilder-Docker
 
 Based on [collectionbuilder-csv](https://github.com/CollectionBuilder/collectionbuilder-csv/) [(commit 2b61486)](https://github.com/CollectionBuilder/collectionbuilder-csv/tree/2b6148622e85b67b9a921dfc320474cf3e7d83b9), this repository tries to make a base docker image for collection builder that is easily customizable and deployable for various projects and build pipelines.
@@ -14,7 +17,7 @@ A shell website (no content)
 
     docker run --rm -it --platform linux/amd64  \
         -p 4000:4000 \
-        dhilsfu/collectionbuilder-docker
+        ghcr.io/sfu-dhil/collectionbuilder-docker
 
 ### Loading basic content & pages
 
@@ -28,7 +31,7 @@ The image doesn't contain any site content by default so you will need to mount 
         -v <PATH TO YOUR about page>:/app/pages/about.yml \
         -v <PATH TO YOUR _config.yml>:/app/_config.yml \
         -v <PATH TO YOUR favicon.ico>:/app/favicon.ico \
-        dhilsfu/collectionbuilder-docker
+        ghcr.io/sfu-dhil/collectionbuilder-docker
 > will run `jekyll serve --host=0.0.0.0` allowing you access your content at `http://localhost:4000`
 
 ### Loading advanced content & pages
@@ -42,7 +45,7 @@ You can also override the entire `_data` and/or `pages` folders if you need addi
         -v <PATH TO YOUR pages folder>:/app/pages \
         -v <PATH TO YOUR _config.yml>:/app/_config.yml \
         -v <PATH TO YOUR favicon.ico>:/app/favicon.ico \
-        dhilsfu/collectionbuilder-docker
+        ghcr.io/sfu-dhil/collectionbuilder-docker
 
 ### Loading metadata from remote url/google sheets
 
@@ -60,7 +63,7 @@ This uses the jekyll `:site` `:after_init` hook so it will only trigger once per
         -v <PATH TO YOUR pages folder>:/app/pages \
         -v <PATH TO YOUR _config.yml>:/app/_config.yml \
         -v <PATH TO YOUR favicon.ico>:/app/favicon.ico \
-        dhilsfu/collectionbuilder-docker
+        ghcr.io/sfu-dhil/collectionbuilder-docker
 
 
 #### Advanced loading metadata from google sheets (github pages)
@@ -128,7 +131,7 @@ function triggerUpdateObjectsAction() {
         -v <PATH TO YOUR _config.yml>:/app/_config.yml \
         -v <PATH TO YOUR favicon.ico>:/app/favicon.ico \
         -v <export path>:/app/_site \
-        dhilsfu/collectionbuilder-docker rake generate_derivatives
+        ghcr.io/sfu-dhil/collectionbuilder-docker rake generate_derivatives
 
 ## Build for deployment
 
@@ -141,7 +144,7 @@ You can build the production version by additionally mounting the `/app/_site` a
         -v <PATH TO YOUR _config.yml>:/app/_config.yml \
         -v <PATH TO YOUR favicon.ico>:/app/favicon.ico \
         -v <export path>:/app/_site \
-        dhilsfu/collectionbuilder-docker rake deploy
+        ghcr.io/sfu-dhil/collectionbuilder-docker rake deploy
 
 ## Update Gemfile / Gemfile.lock
 

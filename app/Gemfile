@@ -3,17 +3,15 @@
 source 'https://rubygems.org'
 
 # needed for Jekyll
-gem 'jekyll'
-gem 'webrick'
-gem 'logger'
-gem 'base64'
-gem 'ostruct'
+gem 'jekyll', '~> 4.4.1'
+gem 'logger', '~> 1.7'
+gem 'ostruct', '~> 0.6.3'
 
 # needed for Rake tasks
-gem 'rake'
-gem 'csv'
-gem 'fileutils'
-gem 'mini_magick'
+gem 'rake', '~> 13.3.1'
+gem 'csv', '~> 3.3.5'
+gem 'fileutils', '~> 1.8'
+gem 'mini_magick', '~> 5.3.1'
 
-gem 'image_optim', platforms: :ruby
-gem 'image_optim_pack', platforms: :ruby
+gem 'image_optim', '~> 0.31.4', platforms: :ruby
+gem 'image_optim_pack', '~> 0.12.2', platforms: :ruby

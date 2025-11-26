@@ -2,7 +2,7 @@ services:
   collectionbuilder:
     platform: linux/amd64
     container_name: collectionbuilder
-    # image: dhilsfu/collectionbuilder-docker
+    # image: ghcr.io/sfu-dhil/collectionbuilder-docker
     build:
       context: .
     ports:
