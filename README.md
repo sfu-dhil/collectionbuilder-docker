@@ -1,5 +1,5 @@
-![Docker Image Latest Badge](https://ghcr-badge.egpl.dev/sfu-dhil/collectionbuilder-docker/latest_tag?trim=major&label=latest)
-![Docker Image Size badge](https://ghcr-badge.egpl.dev/sfu-dhil/collectionbuilder-docker/size)
+[![Docker Image Latest Badge](https://ghcr-badge.egpl.dev/sfu-dhil/collectionbuilder-docker/latest_tag?trim=major&label=latest)](https://github.com/sfu-dhil/collectionbuilder-docker/pkgs/container/collectionbuilder-docker)
+[![Docker Image Size badge](https://ghcr-badge.egpl.dev/sfu-dhil/collectionbuilder-docker/size)](https://github.com/sfu-dhil/collectionbuilder-docker/pkgs/container/collectionbuilder-docker)
 
 # CollectionBuilder-Docker
 
